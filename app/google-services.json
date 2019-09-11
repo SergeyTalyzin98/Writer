@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1032684327995",
+    "firebase_url": "https://writer-sergeytalyzin.firebaseio.com",
+    "project_id": "writer-sergeytalyzin",
+    "storage_bucket": "writer-sergeytalyzin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032684327995:android:89a1a48ffcb115c8",
+        "android_client_info": {
+          "package_name": "com.sergeytalyzin.writer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032684327995-1rpihn1a6pfgngv62cnrvoh14fhhfr9r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sergeytalyzin.writer",
+            "certificate_hash": "d59c5c9eb9ae99689d17b7c946a542fa6309efb0"
+          }
+        },
+        {
+          "client_id": "1032684327995-i0joc6ehj472fnp42g8ndq1dos2asmub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsj22pQK_GRlDjiK9WpuedRzdVjm2mgx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032684327995-i0joc6ehj472fnp42g8ndq1dos2asmub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
