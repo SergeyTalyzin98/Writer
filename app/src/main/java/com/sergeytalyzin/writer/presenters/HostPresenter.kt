@@ -27,7 +27,6 @@ class HostPresenter: MvpPresenter<HostView>() {
 
                     HostProvider().getUser(userId = result, data = { user ->
 
-                        // Создания объекта User один раз и навсегда :)
                         User.create(id = result, name = "${user.first_name} ${user.last_name}",
                             city = user.city!!, photo_100 = user.photo_100!!, photo_200 = user.photo_200!!)
 
