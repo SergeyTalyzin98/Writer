@@ -25,7 +25,6 @@ class HostActivity : MvpAppCompatActivity(), HostView {
         hostPresenter.getUser()
 
         if(supportFragmentManager.findFragmentById(R.id.host_host_activity) == null) {
-
             supportFragmentManager.beginTransaction()
                 .replace(R.id.host_host_activity, NewsFragment())
                 .commit()
