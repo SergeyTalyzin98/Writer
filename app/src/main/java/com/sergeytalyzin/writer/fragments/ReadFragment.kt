@@ -35,6 +35,11 @@ class ReadFragment : MvpAppCompatFragment(), ReadView {
         readPresenter.workId = arguments!!.getString("workId")!!
 
         readPresenter.loadDate()
+
+        in_read_btn.setOnClickListener {
+            it.visibility = View.INVISIBLE
+            loading_in_read.visibility = View.VISIBLE
+        }
     }
 
     override fun showStartLoadingData() {

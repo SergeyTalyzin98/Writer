@@ -7,17 +7,21 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.sergeytalyzin.writer.R
-import com.sergeytalyzin.writer.presenters.ListDraftsPresenter
 
-class DraftsAdapter(private val listDraftsPresenter: ListDraftsPresenter): RecyclerView.Adapter<DraftsAdapter.ProfileViewHolder>() {
+interface ClickDraft {
+    fun click(draftId: String)
+}
+
+class DraftsAdapter: RecyclerView.Adapter<DraftsAdapter.ProfileViewHolder>() {
 
     private val data = mutableListOf<Array<String>>()
+    private lateinit var delegate: ClickDraft
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_for_darfts_list, parent, false)
 
-        return ProfileViewHolder(listDraftsPresenter, view)
+        return ProfileViewHolder(delegate, view)
     }
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
@@ -33,7 +37,11 @@ class DraftsAdapter(private val listDraftsPresenter: ListDraftsPresenter): Recyc
         notifyDataSetChanged()
     }
 
-    class ProfileViewHolder(private val listDraftsPresenter: ListDraftsPresenter, itemView: View): RecyclerView.ViewHolder(itemView) {
+    fun attachDelegate(delegate: ClickDraft) {
+        this.delegate = delegate
+    }
+
+    class ProfileViewHolder(private val delegate: ClickDraft, itemView: View): RecyclerView.ViewHolder(itemView) {
 
         private val wrapperItem = itemView.findViewById<ConstraintLayout>(R.id.wrapper_item_drafts_list)
         private val titleWork = itemView.findViewById<TextView>(R.id.titleWorkDraftsList)
@@ -42,7 +50,7 @@ class DraftsAdapter(private val listDraftsPresenter: ListDraftsPresenter): Recyc
             titleWork.text = data[1]
 
             wrapperItem.setOnClickListener {
-                listDraftsPresenter.wrapperItemPressed(data[0])
+                delegate.click(data[0])
             }
         }
     }

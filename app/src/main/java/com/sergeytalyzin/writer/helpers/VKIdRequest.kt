@@ -3,8 +3,9 @@ package com.sergeytalyzin.writer.helpers
 import com.vk.api.sdk.requests.VKRequest
 import org.json.JSONObject
 
-class VKIdRequest: VKRequest<String> {
-    constructor(uids: IntArray = intArrayOf()): super("users.get") {
+class VKIdRequest(uids: IntArray = intArrayOf()) : VKRequest<String>("users.get") {
+
+    init {
         if (uids.isNotEmpty()) {
             addParam("user_ids", uids.joinToString(","))
         }

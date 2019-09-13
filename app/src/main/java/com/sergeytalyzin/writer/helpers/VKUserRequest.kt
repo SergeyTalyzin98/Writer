@@ -4,8 +4,8 @@ import com.sergeytalyzin.writer.models.User
 import com.vk.api.sdk.requests.VKRequest
 import org.json.JSONObject
 
-class VKUsersRequest: VKRequest<Map<String, Any>> {
-    constructor(uids: IntArray = intArrayOf()): super("users.get") {
+class VKUserRequest(uids: IntArray = intArrayOf()) : VKRequest<Map<String, Any>>("users.get") {
+    init {
         if (uids.isNotEmpty()) {
             addParam("user_ids", uids.joinToString(","))
         }
@@ -14,14 +14,11 @@ class VKUsersRequest: VKRequest<Map<String, Any>> {
 
     override fun parse(r: JSONObject): Map<String, Any> {
         val user = r.getJSONArray("response").getJSONObject(0)
-        var city: String
 
-        try{
-
-            city = user.getJSONObject("city").getString("title")
-
+        val city = try{
+            user.getJSONObject("city").getString("title")
         } catch (e: Exception) {
-            city = "Город не указан"
+            "Город не указан"
         }
 
         return mapOf(

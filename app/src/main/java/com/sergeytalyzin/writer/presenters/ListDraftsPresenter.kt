@@ -2,7 +2,6 @@ package com.sergeytalyzin.writer.presenters
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.sergeytalyzin.writer.adapters.DraftsAdapter
 import com.sergeytalyzin.writer.helpers.User
 import com.sergeytalyzin.writer.providers.ListDraftsProvider
 import com.sergeytalyzin.writer.views.ListDraftsView
@@ -31,9 +30,7 @@ class ListDraftsPresenter: MvpPresenter<ListDraftsView>() {
         }
     }
 
-    fun getObjectDraftsAdapter() = DraftsAdapter(this@ListDraftsPresenter)
-
-    fun wrapperItemPressed(draftId: String) {
+    fun pressOnItem(draftId: String) {
         viewState.startWriteFragment(draftId = draftId)
     }
 }

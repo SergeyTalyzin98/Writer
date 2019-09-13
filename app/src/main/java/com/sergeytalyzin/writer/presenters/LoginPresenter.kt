@@ -4,7 +4,7 @@ import android.content.Intent
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.sergeytalyzin.writer.R
-import com.sergeytalyzin.writer.helpers.VKUsersRequest
+import com.sergeytalyzin.writer.helpers.VKUserRequest
 import com.sergeytalyzin.writer.models.User
 import com.sergeytalyzin.writer.providers.LoginProvider
 import com.sergeytalyzin.writer.views.LoginView
@@ -48,7 +48,7 @@ class LoginPresenter: MvpPresenter<LoginView>() {
 
     private fun getDataAboutUser() {
 
-        VK.execute(VKUsersRequest(), object : VKApiCallback<Map<String, Any>> {
+        VK.execute(VKUserRequest(), object : VKApiCallback<Map<String, Any>> {
             override fun success(result: Map<String, Any>) {
                 // Пользователь авторизован и получен объект User со всеми данными пользователя
                 user = result["user_object"] as User
