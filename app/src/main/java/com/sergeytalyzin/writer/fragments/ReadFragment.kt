@@ -25,7 +25,6 @@ class ReadFragment : MvpAppCompatFragment(), ReadView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_read, container, false)
     }
 
@@ -37,17 +36,12 @@ class ReadFragment : MvpAppCompatFragment(), ReadView {
         readPresenter.loadDate()
 
         in_read_btn.setOnClickListener {
-            it.visibility = View.INVISIBLE
-            loading_in_read.visibility = View.VISIBLE
+            readPresenter.pressBtnRead()
         }
     }
 
-    override fun showStartLoadingData() {
-
-    }
-
-    override fun showEndLoadingData() {
-
+    override fun changeTextInBtnIRead(text: String) {
+        in_read_btn.text = text
     }
 
     override fun setUserInLayout(author: User) {

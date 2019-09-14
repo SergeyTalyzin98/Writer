@@ -2,13 +2,13 @@ package com.sergeytalyzin.writer.presenters
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.sergeytalyzin.writer.helpers.FirebaseHelper
+import com.sergeytalyzin.writer.providers.ProfileProvider
 import com.sergeytalyzin.writer.views.ProfileView
 
 @InjectViewState
 class ProfilePresenter: MvpPresenter<ProfileView>() {
 
-    //private val profileProvider = ProfileProvider()
+    private val profileProvider = ProfileProvider()
 
     fun setUser() {
         viewState.setDataAboutUser()
@@ -16,7 +16,7 @@ class ProfilePresenter: MvpPresenter<ProfileView>() {
 
     fun getWorksAndSet() {
 
-        FirebaseHelper().getPostsByUser(data = { works ->
+        profileProvider.getPostsByUser(data = { works ->
 
             viewState.showWorks(works)
 
@@ -27,6 +27,13 @@ class ProfilePresenter: MvpPresenter<ProfileView>() {
 
     fun getReadAndSet() {
 
+        profileProvider.getPostsFromIRead(answer = {
+
+            viewState.showRead(it)
+
+        }, error = {
+
+        })
     }
 
     fun openAuthor(authorId: String) {

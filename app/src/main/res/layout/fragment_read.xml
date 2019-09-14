@@ -44,7 +44,6 @@
 
                 <Button
                     android:id="@+id/in_read_btn"
-                    android:text="@string/In_read"
                     android:background="@drawable/btn_read"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintTop_toTopOf="@+id/avatar_read"

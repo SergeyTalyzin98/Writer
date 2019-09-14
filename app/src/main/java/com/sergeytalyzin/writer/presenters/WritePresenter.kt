@@ -9,7 +9,7 @@ import android.graphics.BitmapFactory
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.sergeytalyzin.writer.R
-import com.sergeytalyzin.writer.helpers.User
+import com.sergeytalyzin.writer.models.DataAboutUser
 import com.sergeytalyzin.writer.models.Draft
 import com.sergeytalyzin.writer.providers.WriteProvider
 import com.sergeytalyzin.writer.views.WriteView
@@ -94,7 +94,7 @@ class WritePresenter(private val context: Context): MvpPresenter<WriteView>() {
         if(!dataLoaded) {
 
             viewState.showLoadingGetDraft()
-            writeProvider.getDraft(authorId = User.getId(), workId = draftId, data = { draft ->
+            writeProvider.getDraft(authorId = DataAboutUser.getId(), workId = draftId, data = { draft ->
 
                 posterOldPath = draft.posterDownloadUrl!!
                 viewState.setDataInFragment(draft = draft)
@@ -174,12 +174,12 @@ class WritePresenter(private val context: Context): MvpPresenter<WriteView>() {
 
                 mDraft.posterDownloadUrl = it
 
-                writeProvider.writeWork(userId = User.getId(), draft = mDraft,
+                writeProvider.writeWork(userId = DataAboutUser.getId(), draft = mDraft,
                     draftId = draftId, draftsOrPosts = draftsOrPosts)
             })
         }
         else {
-            writeProvider.writeWork(userId = User.getId(), draft = mDraft,
+            writeProvider.writeWork(userId = DataAboutUser.getId(), draft = mDraft,
                 draftId = draftId, draftsOrPosts = draftsOrPosts)
         }
     }
@@ -191,7 +191,7 @@ class WritePresenter(private val context: Context): MvpPresenter<WriteView>() {
 
         if(mDraft.titleWork!!.isNotEmpty()) {
 
-            preparationWork(publish = false, pathPoster = "drafts/images/" + "Id${User.getId()}" + "/" + UUID.randomUUID().toString())
+            preparationWork(publish = false, pathPoster = "drafts/images/" + "Id${DataAboutUser.getId()}" + "/" + UUID.randomUUID().toString())
         }
         else {
             viewState.showEndLoadingAddDraft()
@@ -204,7 +204,7 @@ class WritePresenter(private val context: Context): MvpPresenter<WriteView>() {
         draftsOrPosts = "posts"
         mDraft = Draft(titleWork = titleWork, descriptionWork = descriptionWork, textWork = textWork)
 
-        preparationWork(publish = true, pathPoster = "posts/images/" + "Id${User.getId()}" + "/" + UUID.randomUUID().toString())
+        preparationWork(publish = true, pathPoster = "posts/images/" + "Id${DataAboutUser.getId()}" + "/" + UUID.randomUUID().toString())
     }
 
     fun endAdd() {

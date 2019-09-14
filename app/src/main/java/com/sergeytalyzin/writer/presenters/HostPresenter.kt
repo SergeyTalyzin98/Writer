@@ -2,8 +2,8 @@ package com.sergeytalyzin.writer.presenters
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.sergeytalyzin.writer.helpers.User
 import com.sergeytalyzin.writer.helpers.VKIdRequest
+import com.sergeytalyzin.writer.models.DataAboutUser
 import com.sergeytalyzin.writer.providers.HostProvider
 import com.sergeytalyzin.writer.views.HostView
 import com.vk.api.sdk.VK
@@ -17,7 +17,7 @@ class HostPresenter: MvpPresenter<HostView>() {
 
         if (VK.isLoggedIn()) {
 
-            if(User.getCreated()) {
+            if(DataAboutUser.getCreated()) {
                 viewState.showData()
                 return
             }
@@ -27,7 +27,7 @@ class HostPresenter: MvpPresenter<HostView>() {
 
                     HostProvider().getUser(userId = result, data = { user ->
 
-                        User.create(id = result, name = "${user.first_name} ${user.last_name}",
+                        DataAboutUser.create(id = result, name = "${user.first_name} ${user.last_name}",
                             city = user.city!!, photo_100 = user.photo_100!!, photo_200 = user.photo_200!!)
 
                         viewState.showData()

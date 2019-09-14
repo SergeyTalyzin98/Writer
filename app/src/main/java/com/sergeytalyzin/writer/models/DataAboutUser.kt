@@ -1,6 +1,6 @@
-package com.sergeytalyzin.writer.helpers
+package com.sergeytalyzin.writer.models
 
-object User {
+object DataAboutUser {
     private var created = false
     private lateinit var id: String
     private lateinit var name: String
@@ -12,12 +12,12 @@ object User {
 
         if(!created) {
 
-            this.id = id
-            this.name = name
-            this.city = city
-            this.photo_100 = photo_100
-            this.photo_200 = photo_200
-            this.created = true
+            DataAboutUser.id = id
+            DataAboutUser.name = name
+            DataAboutUser.city = city
+            DataAboutUser.photo_100 = photo_100
+            DataAboutUser.photo_200 = photo_200
+            created = true
         }
     }
 

@@ -2,6 +2,7 @@ package com.sergeytalyzin.writer.presenters
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import com.sergeytalyzin.writer.models.FireBaseHelper
 import com.sergeytalyzin.writer.providers.ReadProvider
 import com.sergeytalyzin.writer.views.ReadView
 
@@ -10,6 +11,7 @@ class ReadPresenter: MvpPresenter<ReadView>() {
 
     private val readProvider = ReadProvider()
     private var dataLoaded = false
+    private var iRead = false
     var authorId = ""
     var workId = ""
 
@@ -19,9 +21,19 @@ class ReadPresenter: MvpPresenter<ReadView>() {
 
         if(!dataLoaded) {
 
-            viewState.showStartLoadingData()
+            readProvider.checkIRead(workId = workId, answer = {
 
-            readProvider.getAuthor(authorId = authorId, data = {
+                iRead = if(it) {
+                    viewState.changeTextInBtnIRead(I_READ)
+                    true
+                }
+                else {
+                    viewState.changeTextInBtnIRead(IN_READ)
+                    false
+                }
+            })
+
+            FireBaseHelper().getAuthor(authorId = authorId, data = {
 
                 viewState.setUserInLayout(it)
 
@@ -29,11 +41,9 @@ class ReadPresenter: MvpPresenter<ReadView>() {
 
             })
 
-            readProvider.getWork(authorId = authorId, workId = workId, data = { work ->
+            FireBaseHelper().getWork(authorId = authorId, workId = workId, data = { work ->
 
                 addView(work.views!!)
-
-                viewState.showEndLoadingData()
                 viewState.setWorkInLayout(work = work)
 
             }, error = {
@@ -42,5 +52,22 @@ class ReadPresenter: MvpPresenter<ReadView>() {
         }
     }
 
+    fun pressBtnRead() {
 
+        iRead = if(!iRead) {
+            readProvider.workWithIRead(authorId = authorId, workId = workId, add = true)
+            viewState.changeTextInBtnIRead(I_READ)
+            true
+        }
+        else {
+            readProvider.workWithIRead(authorId = authorId, workId = workId, add = false)
+            viewState.changeTextInBtnIRead(IN_READ)
+            false
+        }
+    }
+
+    companion object {
+        const val I_READ = "Читаю"
+        const val IN_READ = "В Читаю"
+    }
 }

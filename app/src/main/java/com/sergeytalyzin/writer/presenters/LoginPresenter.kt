@@ -50,7 +50,7 @@ class LoginPresenter: MvpPresenter<LoginView>() {
 
         VK.execute(VKUserRequest(), object : VKApiCallback<Map<String, Any>> {
             override fun success(result: Map<String, Any>) {
-                // Пользователь авторизован и получен объект User со всеми данными пользователя
+                // Пользователь авторизован и получен объект DataAboutUser со всеми данными пользователя
                 user = result["user_object"] as User
 
                 // Проверка есть ли пользователь в FB

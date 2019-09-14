@@ -11,7 +11,7 @@ import com.sergeytalyzin.writer.R
 import com.sergeytalyzin.writer.activities.HostActivity
 import com.sergeytalyzin.writer.adapters.ClickCallback
 import com.sergeytalyzin.writer.adapters.WorksAdapter
-import com.sergeytalyzin.writer.helpers.User
+import com.sergeytalyzin.writer.models.DataAboutUser
 import com.sergeytalyzin.writer.models.DataForItemWork
 import com.sergeytalyzin.writer.presenters.ProfilePresenter
 import com.sergeytalyzin.writer.views.ProfileView
@@ -46,11 +46,12 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
                 profilePresenter.openWork(authorId = authorId, workId = workId)
             }
         })
+
+        profilePresenter.setUser()
+        profilePresenter.getWorksAndSet()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        profilePresenter.setUser()
 
         works_recycler_profile.layoutManager = LinearLayoutManager(context)
         works_recycler_profile.adapter = worksAdapter
@@ -97,9 +98,9 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
     override fun setDataAboutUser() {
-        Picasso.with(context).load(User.getPhoto200()).into(avatar_profile)
-        name_profile.text = User.getName()
-        city_profile.text = User.getCity()
+        Picasso.with(context).load(DataAboutUser.getPhoto200()).into(avatar_profile)
+        name_profile.text = DataAboutUser.getName()
+        city_profile.text = DataAboutUser.getCity()
     }
 
     override fun showWorks(works: List<DataForItemWork>) {

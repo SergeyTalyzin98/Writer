@@ -4,8 +4,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.sergeytalyzin.writer.models.Draft
-import com.sergeytalyzin.writer.models.User
+import com.sergeytalyzin.writer.models.DataAboutUser
 
 class ReadProvider {
 
@@ -16,15 +15,22 @@ class ReadProvider {
         database.child("posts").child(authorId).child(workId).child("views").setValue(views)
     }
 
-    fun getWork(authorId: String, workId: String, data: (work: Draft) -> Unit, error: (databaseError: DatabaseError) -> Unit) {
+    fun checkIRead(workId: String, answer: (answer: Boolean) -> Unit) {
 
-        val database = FirebaseDatabase.getInstance().reference.child("posts").child(authorId).child(workId)
+        val database = FirebaseDatabase.getInstance().reference.child("iRead").child(DataAboutUser.getId())
 
         database.ref.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                data(dataSnapshot.getValue(Draft::class.java)!!)
+                var ans = false
+
+                dataSnapshot.children.forEach {
+                    it.children.forEach { record ->
+                        if(workId == record.key) ans = true
+                    }
+                }
+                answer(ans)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -33,20 +39,14 @@ class ReadProvider {
         })
     }
 
-    fun getAuthor(authorId: String, data: (user: User) -> Unit, error: (databaseError: DatabaseError) -> Unit) {
+    fun workWithIRead(authorId: String, workId: String, add: Boolean) {
+        val database = FirebaseDatabase.getInstance().reference
+                .child("iRead").child(DataAboutUser.getId())
 
-        val database = FirebaseDatabase.getInstance().reference.child("users").child(authorId)
+        if(add)
+            database.child(authorId).child(workId).setValue("")
+        else
+            database.child(authorId).child(workId).removeValue()
 
-        database.ref.addListenerForSingleValueEvent(object : ValueEventListener {
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                data(dataSnapshot.getValue(User::class.java)!!)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                error(databaseError)
-            }
-        })
     }
 }
