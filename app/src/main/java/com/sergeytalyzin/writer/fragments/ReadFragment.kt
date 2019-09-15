@@ -46,7 +46,7 @@ class ReadFragment : MvpAppCompatFragment(), ReadView {
 
     override fun setUserInLayout(author: User) {
         Picasso.with(context).load(author.photo_100).into(avatar_read)
-        val name = "${author.first_name} ${author.last_name}"
+        val name = author.name
         name_read.text = name
     }
 

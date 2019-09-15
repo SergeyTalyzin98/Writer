@@ -9,5 +9,6 @@ data class Draft(val titleWork: String? = "",
                  val descriptionWork: String? = "",
                  val textWork: String? = "",
                  val date: Long? = 0L,
-                 val views: Int? = 0
+                 val views: Int? = 0,
+                 val authorId: String? = ""
 )

@@ -24,8 +24,7 @@ class VKUserRequest(uids: IntArray = intArrayOf()) : VKRequest<Map<String, Any>>
         return mapOf(
             "userId" to  user.getString("id"),
             "user_object" to User(
-                first_name = user.getString("first_name"),
-                last_name = user.getString("last_name"),
+                name = "${user.getString("first_name")} ${user.getString("last_name")}",
                 city = city,
                 photo_100 = user.getString("photo_100"),
                 photo_200 = user.getString("photo_200")

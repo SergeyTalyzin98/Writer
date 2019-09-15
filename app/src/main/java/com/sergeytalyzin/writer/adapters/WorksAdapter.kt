@@ -35,7 +35,7 @@ class WorksAdapter: RecyclerView.Adapter<WorksAdapter.WorksViewHolder>() {
     override fun onBindViewHolder(holder: WorksViewHolder, position: Int) {
 
         GlobalScope.launch(Dispatchers.Main) {
-            holder.bind(data[position])
+            holder.bind(data[(data.size-1) - position])
         }
     }
 
@@ -67,12 +67,12 @@ class WorksAdapter: RecyclerView.Adapter<WorksAdapter.WorksViewHolder>() {
 
             dataAboutUserItemWork.setOnClickListener {
                 it.isPressed = true
-                delegate.clickUser(authorId = data.authorId)
+                delegate.clickUser(authorId = data.work.authorId!!)
             }
 
             dataAboutWorkItemWork.setOnClickListener {
                 it.isPressed = true
-                delegate.clickWork(workId = data.workId, authorId = data.authorId)
+                delegate.clickWork(workId = data.workId, authorId = data.work.authorId!!)
             }
 
             Picasso.with(itemView.context).load(data.avatarAuthor).into(avatar)

@@ -15,7 +15,7 @@ class ReadPresenter: MvpPresenter<ReadView>() {
     var authorId = ""
     var workId = ""
 
-    private fun addView(views: Int) = readProvider.addViewForWork(authorId, workId, views+1)
+    private fun addView(views: Int) = readProvider.addViewForWork(workId, views+1)
 
     fun loadDate () {
 
@@ -41,7 +41,7 @@ class ReadPresenter: MvpPresenter<ReadView>() {
 
             })
 
-            FireBaseHelper().getWork(authorId = authorId, workId = workId, data = { work ->
+            FireBaseHelper().getWork(workId = workId, data = { work ->
 
                 addView(work.views!!)
                 viewState.setWorkInLayout(work = work)
@@ -55,12 +55,12 @@ class ReadPresenter: MvpPresenter<ReadView>() {
     fun pressBtnRead() {
 
         iRead = if(!iRead) {
-            readProvider.workWithIRead(authorId = authorId, workId = workId, add = true)
+            readProvider.workWithIRead(workId = workId, add = true)
             viewState.changeTextInBtnIRead(I_READ)
             true
         }
         else {
-            readProvider.workWithIRead(authorId = authorId, workId = workId, add = false)
+            readProvider.workWithIRead(workId = workId, add = false)
             viewState.changeTextInBtnIRead(IN_READ)
             false
         }

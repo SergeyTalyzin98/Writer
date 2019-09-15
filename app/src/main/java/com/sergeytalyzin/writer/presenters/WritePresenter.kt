@@ -94,7 +94,7 @@ class WritePresenter(private val context: Context): MvpPresenter<WriteView>() {
         if(!dataLoaded) {
 
             viewState.showLoadingGetDraft()
-            writeProvider.getDraft(authorId = DataAboutUser.getId(), workId = draftId, data = { draft ->
+            writeProvider.getDraft(workId = draftId, data = { draft ->
 
                 posterOldPath = draft.posterDownloadUrl!!
                 viewState.setDataInFragment(draft = draft)
@@ -174,20 +174,20 @@ class WritePresenter(private val context: Context): MvpPresenter<WriteView>() {
 
                 mDraft.posterDownloadUrl = it
 
-                writeProvider.writeWork(userId = DataAboutUser.getId(), draft = mDraft,
-                    draftId = draftId, draftsOrPosts = draftsOrPosts)
+                writeProvider.writeWork(draft = mDraft, draftId = draftId,
+                        draftsOrPosts = draftsOrPosts)
             })
         }
         else {
-            writeProvider.writeWork(userId = DataAboutUser.getId(), draft = mDraft,
-                draftId = draftId, draftsOrPosts = draftsOrPosts)
+            writeProvider.writeWork(draft = mDraft, draftId = draftId,
+                    draftsOrPosts = draftsOrPosts)
         }
     }
 
-    fun addToDraft(draft: Draft) {
+    fun addToDraft(titleWork: String, descriptionWork: String, textWork: String) {
 
         draftsOrPosts = "drafts"
-        mDraft = draft
+        mDraft = Draft(titleWork = titleWork, descriptionWork = descriptionWork, textWork = textWork, authorId = DataAboutUser.getId())
 
         if(mDraft.titleWork!!.isNotEmpty()) {
 
@@ -202,7 +202,7 @@ class WritePresenter(private val context: Context): MvpPresenter<WriteView>() {
     fun publish(titleWork: String, descriptionWork: String, textWork: String) {
 
         draftsOrPosts = "posts"
-        mDraft = Draft(titleWork = titleWork, descriptionWork = descriptionWork, textWork = textWork)
+        mDraft = Draft(titleWork = titleWork, descriptionWork = descriptionWork, textWork = textWork, authorId = DataAboutUser.getId())
 
         preparationWork(publish = true, pathPoster = "posts/images/" + "Id${DataAboutUser.getId()}" + "/" + UUID.randomUUID().toString())
     }

@@ -10,9 +10,9 @@ class ReadProvider {
 
     private var database = FirebaseDatabase.getInstance().reference
 
-    fun addViewForWork(authorId: String, workId: String, views: Int) {
+    fun addViewForWork(workId: String, views: Int) {
 
-        database.child("posts").child(authorId).child(workId).child("views").setValue(views)
+        database.child("posts").child(workId).child("views").setValue(views)
     }
 
     fun checkIRead(workId: String, answer: (answer: Boolean) -> Unit) {
@@ -26,9 +26,8 @@ class ReadProvider {
                 var ans = false
 
                 dataSnapshot.children.forEach {
-                    it.children.forEach { record ->
-                        if(workId == record.key) ans = true
-                    }
+
+                    if(workId == it.key) ans = true
                 }
                 answer(ans)
             }
@@ -39,14 +38,14 @@ class ReadProvider {
         })
     }
 
-    fun workWithIRead(authorId: String, workId: String, add: Boolean) {
+    fun workWithIRead(workId: String, add: Boolean) {
         val database = FirebaseDatabase.getInstance().reference
                 .child("iRead").child(DataAboutUser.getId())
 
         if(add)
-            database.child(authorId).child(workId).setValue("")
+            database.child(workId).setValue("")
         else
-            database.child(authorId).child(workId).removeValue()
+            database.child(workId).removeValue()
 
     }
 }

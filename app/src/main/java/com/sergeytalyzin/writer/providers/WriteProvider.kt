@@ -10,13 +10,12 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.sergeytalyzin.writer.models.Draft
 import com.sergeytalyzin.writer.presenters.WritePresenter
-import java.util.*
 
 class WriteProvider(private val writePresenter: WritePresenter) {
 
-    fun getDraft(authorId: String, workId: String, data: (work: Draft) -> Unit, error: (databaseError: DatabaseError) -> Unit) {
+    fun getDraft(workId: String, data: (work: Draft) -> Unit, error: (databaseError: DatabaseError) -> Unit) {
 
-        val database = FirebaseDatabase.getInstance().reference.child("drafts").child(authorId).child(workId)
+        val database = FirebaseDatabase.getInstance().reference.child("drafts").child(workId)
 
         database.ref.addListenerForSingleValueEvent(object : ValueEventListener {
 
@@ -71,20 +70,41 @@ class WriteProvider(private val writePresenter: WritePresenter) {
         }
     }
 
-    // fun deletePoster(path: String) = mStorageRef.child(path).delete()
+    private fun getCountPosts(count: (count: Long) -> Unit) {
 
-    fun writeWork(userId: String, draft: Draft, draftId: String = "", draftsOrPosts: String) {
+        val database = FirebaseDatabase.getInstance().reference.child("posts")
 
-        var name = draftId
+        database.ref.addListenerForSingleValueEvent(object : ValueEventListener {
 
-        if(draftId == "")
-            name = UUID.randomUUID().toString()
-        else if(draftsOrPosts == "posts")
-            name = UUID.randomUUID().toString()
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                count(dataSnapshot.childrenCount)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+    }
+
+    fun writeWork(draft: Draft, draftId: String = "", draftsOrPosts: String) {
 
         val database = FirebaseDatabase.getInstance().reference
-        database.child(draftsOrPosts).child(userId).child(name).setValue(draft)
-        database.child(draftsOrPosts).child(userId).child(name).child("date").setValue(ServerValue.TIMESTAMP)
-        writePresenter.endAdd()
+
+        if(draftId == "" || draftsOrPosts == "posts") {
+
+            getCountPosts {
+
+                val name = "${it + 1}"
+                database.child(draftsOrPosts).child(name).setValue(draft)
+                database.child(draftsOrPosts).child(name).child("date").setValue(ServerValue.TIMESTAMP)
+                writePresenter.endAdd()
+            }
+        }
+        else if(draftId != "") {
+            database.child(draftsOrPosts).child(draftId).setValue(draft)
+            database.child(draftsOrPosts).child(draftId).child("date").setValue(ServerValue.TIMESTAMP)
+            writePresenter.endAdd()
+        }
     }
 }

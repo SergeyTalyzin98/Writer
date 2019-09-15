@@ -31,7 +31,6 @@ class WriteFragment : MvpAppCompatFragment(), WriteView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(com.sergeytalyzin.writer.R.layout.fragment_write, container, false)
     }
 
@@ -47,8 +46,8 @@ class WriteFragment : MvpAppCompatFragment(), WriteView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         btn_draft_write.setOnClickListener {
-            writePresenter.addToDraft(Draft(titleWork = work_name_write.text.toString(),
-                    descriptionWork = work_description_write.text.toString(), textWork = work_text_write.text.toString()))
+            writePresenter.addToDraft(titleWork = work_name_write.text.toString(),
+                    descriptionWork = work_description_write.text.toString(), textWork = work_text_write.text.toString())
         }
 
         btn_publish_write.setOnClickListener {
