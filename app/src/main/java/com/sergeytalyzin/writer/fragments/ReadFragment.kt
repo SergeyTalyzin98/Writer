@@ -30,7 +30,6 @@ class ReadFragment : MvpAppCompatFragment(), ReadView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        readPresenter.authorId = arguments!!.getString("authorId")!!
         readPresenter.workId = arguments!!.getString("workId")!!
 
         readPresenter.loadDate()
@@ -50,6 +49,16 @@ class ReadFragment : MvpAppCompatFragment(), ReadView {
         name_read.text = name
     }
 
+    override fun startLoading() {
+        loading_read.visibility = View.VISIBLE
+        data_in_read.visibility = View.GONE
+    }
+
+    override fun endLoading() {
+        loading_read.visibility = View.GONE
+        data_in_read.visibility = View.VISIBLE
+    }
+
     override fun setWorkInLayout(work: Draft) {
 
         if(work.posterDownloadUrl != "")
@@ -59,9 +68,8 @@ class ReadFragment : MvpAppCompatFragment(), ReadView {
         text_read.text = work.textWork
     }
 
-    fun newInstance(authorId: String, workId: String): ReadFragment {
+    fun newInstance(workId: String): ReadFragment {
         val args = Bundle()
-        args.putString("authorId", authorId)
         args.putString("workId", workId)
         val fragment = ReadFragment()
         fragment.arguments = args

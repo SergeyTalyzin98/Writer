@@ -34,8 +34,8 @@ class NewsFragment: MvpAppCompatFragment(), NewsView {
 
         worksAdapter.attachDelegate(object : ClickCallback {
 
-            override fun clickWork(authorId: String, workId: String) {
-                newsPresenter.openWork(authorId = authorId, workId = workId)
+            override fun clickWork(workId: String) {
+                newsPresenter.openWork(workId = workId)
             }
 
             override fun clickUser(authorId: String) {
@@ -66,8 +66,8 @@ class NewsFragment: MvpAppCompatFragment(), NewsView {
         worksAdapter.setListDrafts(works)
     }
 
-    override fun startReadFragment(authorId: String, workId: String) {
-        (activity as HostActivity).changeFragment(ReadFragment().newInstance(authorId = authorId, workId = workId))
+    override fun startReadFragment(workId: String) {
+        (activity as HostActivity).changeFragment(ReadFragment().newInstance(workId = workId))
     }
 
     override fun startAuthorFragment(authorId: String) {

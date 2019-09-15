@@ -12,7 +12,6 @@ class ReadPresenter: MvpPresenter<ReadView>() {
     private val readProvider = ReadProvider()
     private var dataLoaded = false
     private var iRead = false
-    var authorId = ""
     var workId = ""
 
     private fun addView(views: Int) = readProvider.addViewForWork(workId, views+1)
@@ -20,6 +19,8 @@ class ReadPresenter: MvpPresenter<ReadView>() {
     fun loadDate () {
 
         if(!dataLoaded) {
+
+            viewState.startLoading()
 
             readProvider.checkIRead(workId = workId, answer = {
 
@@ -33,18 +34,19 @@ class ReadPresenter: MvpPresenter<ReadView>() {
                 }
             })
 
-            FireBaseHelper().getAuthor(authorId = authorId, data = {
-
-                viewState.setUserInLayout(it)
-
-            }, error = {
-
-            })
-
             FireBaseHelper().getWork(workId = workId, data = { work ->
 
                 addView(work.views!!)
-                viewState.setWorkInLayout(work = work)
+
+                FireBaseHelper().getAuthor(authorId = work.authorId!!, data = {
+
+                    viewState.endLoading()
+                    viewState.setWorkInLayout(work = work)
+                    viewState.setUserInLayout(it)
+
+                }, error = {
+
+                })
 
             }, error = {
 

@@ -7,5 +7,7 @@ import com.sergeytalyzin.writer.models.User
 interface ReadView: MvpView {
     fun setUserInLayout(author: User)
     fun setWorkInLayout(work: Draft)
+    fun startLoading()
+    fun endLoading()
     fun changeTextInBtnIRead(text: String)
 }

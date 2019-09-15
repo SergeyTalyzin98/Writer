@@ -13,5 +13,5 @@ interface ProfileView: MvpView {
     fun showStartLoading() // Показывает загрузку
     fun showEndLoading() // остановка загрузки
     @StateStrategyType(value = SkipStrategy::class)
-    fun startReadFragment(authorId: String, workId: String) //
+    fun startReadFragment(workId: String) //
 }

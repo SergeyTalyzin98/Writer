@@ -49,7 +49,7 @@ class ProfilePresenter: MvpPresenter<ProfileView>() {
 
     }
 
-    fun openWork(authorId: String, workId: String) {
-        viewState.startReadFragment(authorId = authorId, workId = workId)
+    fun openWork(workId: String) {
+        viewState.startReadFragment(workId = workId)
     }
 }

@@ -42,8 +42,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
             }
 
-            override fun clickWork(authorId: String, workId: String) {
-                profilePresenter.openWork(authorId = authorId, workId = workId)
+            override fun clickWork( workId: String) {
+                profilePresenter.openWork(workId = workId)
             }
         })
 
@@ -87,8 +87,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         data_in_profile.visibility = View.VISIBLE
     }
 
-    override fun startReadFragment(authorId: String, workId: String) {
-        (activity as HostActivity).changeFragment(ReadFragment().newInstance(authorId = authorId, workId = workId))
+    override fun startReadFragment(workId: String) {
+        (activity as HostActivity).changeFragment(ReadFragment().newInstance(workId = workId))
     }
 
     override fun showError(strId: Int, errorCode: Int) {

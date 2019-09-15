@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 interface ClickCallback {
     fun clickUser(authorId: String)
-    fun clickWork(authorId: String, workId: String)
+    fun clickWork(workId: String)
 }
 
 class WorksAdapter: RecyclerView.Adapter<WorksAdapter.WorksViewHolder>() {
@@ -72,7 +72,7 @@ class WorksAdapter: RecyclerView.Adapter<WorksAdapter.WorksViewHolder>() {
 
             dataAboutWorkItemWork.setOnClickListener {
                 it.isPressed = true
-                delegate.clickWork(workId = data.workId, authorId = data.work.authorId!!)
+                delegate.clickWork(workId = data.workId)
             }
 
             Picasso.with(itemView.context).load(data.avatarAuthor).into(avatar)

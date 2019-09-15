@@ -8,6 +8,7 @@
         tools:context=".fragments.ReadFragment">
 
     <androidx.core.widget.NestedScrollView
+            android:id="@+id/data_in_read"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -51,19 +52,6 @@
                     app:layout_constraintRight_toRightOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp" />
-
-                <com.github.rahatarmanahmed.cpv.CircularProgressView
-                    android:visibility="gone"
-                    app:layout_constraintTop_toTopOf="@+id/in_read_btn"
-                    app:layout_constraintBottom_toBottomOf="@+id/in_read_btn"
-                    app:layout_constraintLeft_toLeftOf="@+id/in_read_btn"
-                    app:layout_constraintRight_toRightOf="@+id/in_read_btn"
-                    android:id="@+id/loading_in_read"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:cpv_animAutostart="true"
-                    app:cpv_color="@color/colorPrimary"
-                    app:cpv_indeterminate="true" />
 
                 <TextView
                         android:textSize="@dimen/font_size"
@@ -110,5 +98,19 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/loading_read"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cpv_animAutostart="true"
+        app:cpv_color="@color/colorPrimary"
+        app:cpv_indeterminate="true" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

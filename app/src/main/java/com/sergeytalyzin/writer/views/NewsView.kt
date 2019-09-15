@@ -10,6 +10,6 @@ interface NewsView: MvpView {
     fun endLoading()
     fun setList(works: List<DataForItemWork>)
     @StateStrategyType(value = SkipStrategy::class)
-    fun startReadFragment(authorId: String, workId: String)
+    fun startReadFragment(workId: String)
     fun startAuthorFragment(authorId: String)
 }
